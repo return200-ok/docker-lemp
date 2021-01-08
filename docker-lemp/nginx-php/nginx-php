@@ -1,0 +1,16 @@
+FROM ubuntu:18.04
+RUN apt update -y \
+  && apt install nginx -y \
+  && apt install php7.2-fpm -y \
+  && apt install php7.2-mysql -y \
+  && apt install curl -y \
+  && apt install nano -y
+VOLUME /app
+WORKDIR /app
+COPY ./index.php /app/index.php
+COPY ./default.conf /etc/nginx/sites-enabled/default
+COPY ./entrypoint.sh /entrypoint.sh
+RUN sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 10M/' /etc/php/7.2/fpm/php.ini
+RUN chmod 777 /entrypoint.sh
+EXPOSE 80
+ENTRYPOINT /entrypoint.sh

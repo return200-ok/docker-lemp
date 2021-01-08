@@ -1,0 +1,26 @@
+version: '2.3'
+services:
+  php:
+    image: cvphp-fpm:v1
+    volumes:
+      - ./:/app
+    working_dir: /app
+  web:
+    image: cvnginx:v1
+    volumes:
+      - ./:/app
+    depends_on:
+      - php
+    ports:
+      - "80:80"
+  mysql:
+    image: cvmysql:v1
+    volumes
+      - ./:/app
+      - dbdata:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=world
+      - MYSQL_ROOT_PASSWORD=root
+    working_dir: /app
+volumes:
+  dbdata:

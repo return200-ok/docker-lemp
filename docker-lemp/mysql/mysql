@@ -1,0 +1,8 @@
+from mysql:5.7
+ENV MYSQL_DATABASE=db_test
+ENV MYSQL_ROOT_PASSWORD=caolv6868
+COPY ./mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
+COPY ./scripts/entrypoint.sh /docker-entrypoint-initdb.d/entrypoint.sh
+VOLUME /app
+WORKDIR /app
+EXPOSE 33060
